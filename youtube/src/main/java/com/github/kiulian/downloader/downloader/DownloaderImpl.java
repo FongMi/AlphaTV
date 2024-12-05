@@ -6,6 +6,7 @@ import com.github.kiulian.downloader.Config;
 import com.github.kiulian.downloader.YoutubeException;
 import com.github.kiulian.downloader.downloader.request.RequestWebpage;
 import com.github.kiulian.downloader.downloader.response.ResponseImpl;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class DownloaderImpl implements Downloader {
                     }
                     br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
                     String inputLine;
-                    while ((inputLine = br.readLine()) != null) result.append(inputLine).append('\n');
+                    while ((inputLine = BoundedLineReader.readLine(br, 5_000_000)) != null) result.append(inputLine).append('\n');
                 } finally {
                     closeSilently(br);
                 }
